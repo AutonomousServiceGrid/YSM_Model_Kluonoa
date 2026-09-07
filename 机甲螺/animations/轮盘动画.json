@@ -9801,6 +9801,12 @@
 					"rotation": [0, 0, 0]
 				}
 			}
+		},
+		"天空骑士": {
+			"animation_length": 0.0417,
+			"timeline": {
+				"0.0": "(v.roaming.mecha==1)?(v.roaming.mecha=0):(v.roaming.mecha=1);"
+			}
 		}
 	}
 }
