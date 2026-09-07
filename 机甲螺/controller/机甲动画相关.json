@@ -6,45 +6,186 @@
 			"states": {
 				"收起状态": {
 					"transitions": [
-						{"起飞": "v.roaming.mecha==1&&ctrl.idle;"},
-						{"空中待机": "v.roaming.mecha==1&&!ctrl.idle;"}
+						{
+							"起飞": "v.roaming.mecha==1&&ctrl.idle&&!v.roaming.car;"
+						},
+						{
+							"空中待机": "v.roaming.mecha==1&&!ctrl.idle&&!v.roaming.car;"
+						}
 					]
 				},
 				"起飞": {
-					"animations": ["机甲_起飞"],
+					"animations": [
+						"机甲_起飞"
+					],
 					"on_exit": [],
 					"transitions": [
-						{"起飞转待机": "q.all_animations_finished;"}
+						{
+							"收起状态": "v.roaming.car;"
+						},
+						{
+							"起飞转待机": "q.all_animations_finished;"
+						}
 					]
 				},
 				"起飞转待机": {
-					"animations": ["机甲_起飞转待机"],
+					"animations": [
+						"机甲_起飞转待机"
+					],
 					"transitions": [
-						{"空中待机": "q.all_animations_finished||!ctrl.idle;"}
+						{
+							"收起状态": "v.roaming.car;"
+						},
+						{
+							"空中待机": "q.all_animations_finished||!ctrl.idle;"
+						}
 					]
 				},
 				"空中待机": {
-					"animations": ["机甲_空中待机"],
-					"on_entry": ["v.show_mecha=1;"],
-					"on_exit": ["v.show_mecha=0;"],
+					"on_entry": [
+						"v.mecha_active=1;"
+					],
+					"on_exit": [
+						"v.mecha_active=0;"
+					],
 					"transitions": [
-						{"降落": "v.roaming.mecha==0&&ctrl.idle;"},
-						{"收起状态": "v.roaming.mecha==0&&!ctrl.idle;"}
+						{
+							"降落": "(v.roaming.mecha==0||v.roaming.car)&&ctrl.idle;"
+						},
+						{
+							"收起状态": "(v.roaming.mecha==0||v.roaming.car)&&!ctrl.idle;"
+						}
 					]
 				},
 				"降落": {
-					"animations": ["机甲_降落"],
+					"animations": [
+						"机甲_降落"
+					],
 					"on_exit": [],
 					"transitions": [
-						{"收起状态": "q.all_animations_finished||ctrl.idle;"}
+						{
+							"收起状态": "q.all_animations_finished||!ctrl.idle;"
+						}
 					]
 				}
 			}
 		},
 		"player.pre_parallel_nozzle_anim": {
+			"initial_state": "off",
 			"states": {
-				"default": {
-					"animations": ["喷口1", "喷口2"]
+				"off": {
+					"animations": [
+						{
+							"喷口关闭": "!v.roaming.mecha||v.roaming.car||(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						}
+					],
+					"transitions": [
+						{
+							"on": "v.roaming.mecha&&!v.roaming.car&&!(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.2": 0
+					}
+				},
+				"on": {
+					"animations": [
+						{
+							"喷口1": "v.roaming.mecha"
+						},
+						{
+							"喷口2": "v.roaming.mecha"
+						}
+					],
+					"transitions": [
+						{
+							"off": "!v.roaming.mecha||v.roaming.car||(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.2": 0
+					}
+				}
+			}
+		},
+		"player.pre_parallel_wing_anim": {
+			"initial_state": "收起",
+			"states": {
+				"收起": {
+					"animations": [
+						"完全收起",
+						{
+							"光翼隐藏": "v.roaming.car"
+						}
+					],
+					"transitions": [
+						{
+							"展开中": "v.roaming.mecha&&!v.roaming.car&&!(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.1": 0
+					}
+				},
+				"展开中": {
+					"animations": [
+						"展开过程",
+						{
+							"光翼隐藏": "v.roaming.car"
+						}
+					],
+					"transitions": [
+						{
+							"收起中": "!v.roaming.mecha||v.roaming.car||(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						},
+						{
+							"展开": "q.all_animations_finished"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.1": 0
+					}
+				},
+				"展开": {
+					"animations": [
+						"完全展开",
+						{
+							"光翼隐藏": "v.roaming.car"
+						}
+					],
+					"transitions": [
+						{
+							"收起中": "!v.roaming.mecha||v.roaming.car||(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.1": 0
+					}
+				},
+				"收起中": {
+					"animations": [
+						"展开过程倒放",
+						{
+							"光翼隐藏": "v.roaming.car"
+						}
+					],
+					"transitions": [
+						{
+							"展开中": "v.roaming.mecha&&!v.roaming.car&&!(ctrl.climbing||ctrl.climb||ctrl.sneak||ctrl.sneaking)"
+						},
+						{
+							"收起": "q.all_animations_finished"
+						}
+					],
+					"blend_transition": {
+						"0.0": 1,
+						"0.1": 0
+					}
 				}
 			}
 		}

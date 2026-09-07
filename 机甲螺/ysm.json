@@ -120,8 +120,23 @@
 				"parcool": "animations/跑酷动画.json",
 				"tlm": "animations/女仆动画.json"
 			},
-			"animation_controllers": ["controller/主动画修改.json", "controller/并行动画修改.json", "controller/车辆动画相关.json", "controller/机甲动画相关.json"]
-		}
+			"animation_controllers": [
+				"controller/主动画修改.json",
+				"controller/并行动画修改.json",
+				"controller/车辆动画相关.json",
+				"controller/机甲动画相关.json",
+				"controller/TAC动画相关.json"
+			]
+		},
+		"projectiles": [
+			{
+				"match": [ "minecraft:trident" ],
+				"model": "models/trident.json",
+				"texture": {
+					"uv": "textures/trident.png"
+				}
+			}
+		]
 	},
 	"properties": {
 		"height_scale": 0.7,
@@ -142,7 +157,8 @@
 			"萝莉摇": "萝莉摇",
 			"A Cup Of Liber-Tea": "超级气球",
 			"卡其脱离太": "卡其脱离太",
-			"大风车": "大风车"
+			"大风车": "大风车",
+			"天空骑士": "天空骑士"
 		},
 		"extra_animation_buttons": [
 			{
@@ -226,9 +242,22 @@
 						"value": "v.roaming.car_gt_suit"
 					}
 				]
+			},
+			{
+				"id": "mecha_config",
+				"name": "武装形态",
+				"config_forms": [
+					{
+						"type": "checkbox",
+						"title": "启用武装形态",
+						"value": "v.roaming.mecha"
+					}
+				]
 			}
 		],
 		"preview_animation": "选择动画",
+		"gui_foreground": "textures/gui/foreground.png",
+		"gui_background": "textures/gui/background.png",
 		"default_texture": "texture",
 		"free": true,
 		"render_layers_first": false,
