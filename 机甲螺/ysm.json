@@ -274,7 +274,7 @@
 				]
 			}
 		],
-		"preview_animation": "选择动画",
+		"preview_animation": "未选中",
 		"gui_foreground": "textures/gui/foreground.png",
 		"gui_background": "textures/gui/background.png",
 		"default_texture": "texture",
@@ -282,6 +282,6 @@
 		"render_layers_first": false,
 		"disable_preview_rotation": true,
 		"all_cutout": false,
-		"gui_no_lighting": false
+		"gui_no_lighting": true
 	}
 }
