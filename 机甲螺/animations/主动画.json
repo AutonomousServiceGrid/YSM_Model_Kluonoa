@@ -3196,29 +3196,13 @@
 					"position": [0, 0, 0]
 				},
 				"molang": {
-					"rotation": ["v.bv=math.sin(query.life_time*2000)*3", 0, 0]
+					"rotation": ["v.bv=math.sin(query.life_time*2000)*3;", 0, 0]
 				},
 				"xiao": {
 					"position": [0, 0, -1]
 				},
-				"fakehair": {
-					"rotation": {
-						"0.0": {
-							"post": [0, 0, 0],
-							"lerp_mode": "catmullrom"
-						},
-						"0.1667": {
-							"post": [5, 0, 0],
-							"lerp_mode": "catmullrom"
-						},
-						"0.3333": {
-							"post": [0, 0, 0],
-							"lerp_mode": "catmullrom"
-						}
-					}
-				},
 				"HairA1": {
-					"rotation": [0, 0, 0]
+					"rotation": [30, 0, 0]
 				},
 				"HairA2": {
 					"rotation": [0, 0, 0]
@@ -3249,6 +3233,22 @@
 				},
 				"Tail4": {
 					"rotation": [0, 0, "math.sin(-260+q.anim_time*360/(8/24))*20"]
+				},
+				"fakehair": {
+					"rotation": {
+						"0.0": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.1667": {
+							"post": [5, 0, 0],
+							"lerp_mode": "catmullrom"
+						},
+						"0.3333": {
+							"post": [0, 0, 0],
+							"lerp_mode": "catmullrom"
+						}
+					}
 				}
 			}
 		},
@@ -10311,41 +10311,49 @@
 		},
 		"pre_parallel0": {
 			"loop": true,
-			"animation_length": 0.01,
+			"animation_length": 0.0101,
 			"bones": {
 				"molang": {
 					"rotation": ["v.bv=0;v.by=0;v.bg=0;", "v.hv=0;v.hy=0;v.hg=0;", "v.fast_run=0;v.fire=0;"]
 				},
 				"HairA1": {
 					"rotation": [
-						"ysm.second_order('抬头头发防穿模', 0.8*ysm.head_pitch, 1, 0.6, 0)+ysm.second_order('头发垂直', math.clamp(-3*q.vertical_speed+v.hv,-10,120), 1.5, 0.6, 0)+ysm.second_order('头发水平', math.clamp(ysm.ground_speed2/2+v.hg,0,20), 1.5, 0.6, 0)+ysm.bone_rot('fakehair').x",
+						"-math.clamp(-ysm.second_order('抬头头发防穿模', 0.8*ysm.head_pitch, 1, 0.6, 0)-ysm.second_order('头发垂直', math.clamp(-3*q.vertical_speed+v.hv,-10,120), 1.5, 0.6, 0)-ysm.second_order('头发水平', math.clamp(ysm.ground_speed2/2+v.hg,0,20), 1.5, 0.6, 0)-ysm.bone_rot('fakehair').x,-120,7.5)",
 						0,
 						"ysm.second_order('头发角速度', math.clamp(0.05*q.yaw_speed,-80,80), 1.5, 0.6, 0)+ysm.bone_rot('fakehair').z"
 					]
 				},
 				"HairB1": {
 					"rotation": [
-						"3*ysm.second_order('M1x增量',v.MHair1_x,1,0.5,0)+ysm.bone_rot('fakehair').x",
+						"-3*ysm.second_order('M1x增量', v.MHair1_x, 1, 0.5, 0) - ysm.second_order('B低头', -0.3*ysm.head_pitch, 1.0, 0.5, 0) - ysm.bone_rot('fakehair').x",
 						0,
-						"3*ysm.second_order('M1z增量',v.MHair1_z,1,0.5,0)+ysm.bone_rot('fakehair').z"
+						"3*ysm.second_order('M1z增量', v.MHair1_z, 1, 0.5, 0) + ysm.bone_rot('fakehair').z"
 					]
 				},
 				"HairC1": {
-					"rotation": ["ysm.second_order('B1x增量',ysm.bone_rot('HairB1').x,2,0.5,0.2)", 0, "ysm.second_order('B1z增量',ysm.bone_rot('HairB1').z,2,0.5,0.2)"]
+					"rotation": [
+						"-ysm.second_order('B1x增量', ysm.bone_rot('HairB1').x, 2, 0.5, 0.2) - ysm.second_order('C低头', -0.3*ysm.head_pitch, 0.85, 0.45, 0)",
+						0,
+						"ysm.second_order('B1z增量', ysm.bone_rot('HairB1').z, 2, 0.5, 0.2)"
+					]
 				},
 				"HairD1": {
-					"rotation": ["ysm.second_order('C1x增量',ysm.bone_rot('HairC1').x,2,0.5,0.5)", 0, "ysm.second_order('C1z增量',ysm.bone_rot('HairC1').z,2,0.5,0.5)"]
+					"rotation": [
+						"-math.clamp(ysm.second_order('C1x增量', ysm.bone_rot('HairC1').x, 2, 0.5, 0.5) + ysm.second_order('D低头', -0.3*ysm.head_pitch, 0.7, 0.4, 0),-30,30)",
+						0,
+						"ysm.second_order('C1z增量', ysm.bone_rot('HairC1').z, 2, 0.5, 0.5)"
+					]
 				},
 				"HairA2": {
 					"rotation": [
-						"ysm.second_order('抬头头发防穿模', 0.8*ysm.head_pitch, 1, 0.6, 0)+ysm.second_order('头发垂直', math.clamp(-3*q.vertical_speed+v.hv,-10,120), 1.5, 0.6, 0)+ysm.second_order('头发水平', math.clamp(ysm.ground_speed2/2+v.hg,0,20), 1.5, 0.6, 0)+ysm.bone_rot('fakehair').x",
+						"-math.clamp(-ysm.second_order('抬头头发防穿模', 0.8*ysm.head_pitch, 1, 0.6, 0)-ysm.second_order('头发垂直', math.clamp(-3*q.vertical_speed+v.hv,-10,120), 1.5, 0.6, 0)-ysm.second_order('头发水平', math.clamp(ysm.ground_speed2/2+v.hg,0,20), 1.5, 0.6, 0)-ysm.bone_rot('fakehair').x,-25,15)",
 						0,
 						"ysm.second_order('头发角速度', math.clamp(0.05*q.yaw_speed,-80,80), 1.5, 0.6, 0)+ysm.bone_rot('fakehair').z"
 					]
 				},
 				"HairB2": {
 					"rotation": [
-						"3*ysm.second_order('M1x增量',v.MHair1_x,1,0.5,0)+ysm.bone_rot('fakehair').x",
+						"-3*ysm.second_order('M1x增量', v.MHair1_x, 1, 0.5, 0) - ysm.second_order('B低头', -0.3*ysm.head_pitch, 1.0, 0.5, 0) - ysm.bone_rot('fakehair').x",
 						0,
 						"3*ysm.second_order('M1z增量',v.MHair1_z,1,0.5,0)+ysm.bone_rot('fakehair').z"
 					]
@@ -10391,7 +10399,7 @@
 				},
 				"HairB6": {
 					"rotation": [
-						"3*ysm.second_order('M1x增量',v.MHair1_x,1,0.5,0)+ysm.bone_rot('fakehair').x",
+						"-3*ysm.second_order('M1x增量', v.MHair1_x, 1, 0.5, 0) - ysm.second_order('B低头', -0.3*ysm.head_pitch, 1.0, 0.5, 0) - ysm.bone_rot('fakehair').x",
 						0,
 						"3*ysm.second_order('M1z增量',v.MHair1_z,1,0.5,0)+ysm.bone_rot('fakehair').z"
 					]
@@ -10404,14 +10412,14 @@
 				},
 				"HairA4": {
 					"rotation": [
-						"ysm.second_order('抬头头发防穿模', 0.8*ysm.head_pitch, 1, 0.6, 0)+ysm.second_order('头发垂直', math.clamp(-3*q.vertical_speed+v.hv,-10,120), 1.5, 0.6, 0)+ysm.second_order('头发水平', math.clamp(ysm.ground_speed2/2+v.hg,0,20), 1.5, 0.6, 0)+ysm.bone_rot('fakehair').x",
+						"-math.clamp(-ysm.second_order('抬头头发防穿模', 0.8*ysm.head_pitch, 1, 0.6, 0)-ysm.second_order('头发垂直', math.clamp(-3*q.vertical_speed+v.hv,-10,120), 1.5, 0.6, 0)-ysm.second_order('头发水平', math.clamp(ysm.ground_speed2/2+v.hg,0,20), 1.5, 0.6, 0)-ysm.bone_rot('fakehair').x,-25,15)",
 						0,
 						"ysm.second_order('头发角速度', math.clamp(0.05*q.yaw_speed,-80,80), 1.5, 0.6, 0)+ysm.bone_rot('fakehair').z"
 					]
 				},
 				"HairB4": {
 					"rotation": [
-						"3*ysm.second_order('M1x增量',v.MHair1_x,1,0.5,0)+ysm.bone_rot('fakehair').x",
+						"-3*ysm.second_order('M1x增量', v.MHair1_x, 1, 0.5, 0) - ysm.second_order('B低头', -0.3*ysm.head_pitch, 1.0, 0.5, 0) - ysm.bone_rot('fakehair').x",
 						0,
 						"3*ysm.second_order('M1z增量',v.MHair1_z,1,0.5,0)+ysm.bone_rot('fakehair').z"
 					]
@@ -22377,7 +22385,10 @@
 					"scale": {
 						"0.08": [1, 0, 1],
 						"0.37": [1, 0, 1],
-						"0.41": {"pre": [1, 0, 1], "post": [1, 1, 1]}
+						"0.41": {
+							"pre": [1, 0, 1],
+							"post": [1, 1, 1]
+						}
 					}
 				},
 				"Rightrabit-cost-wing-1": {
@@ -22567,7 +22578,10 @@
 					"scale": {
 						"0.08": [1, 0, 1],
 						"0.37": [1, 0, 1],
-						"0.41": {"pre": [1, 0, 1], "post": [1, 1, 1]}
+						"0.41": {
+							"pre": [1, 0, 1],
+							"post": [1, 1, 1]
+						}
 					}
 				},
 				"Leftrabit-cost-wing-1": {

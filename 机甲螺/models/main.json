@@ -32184,6 +32184,11 @@
 					]
 				},
 				{
+					"name": "fakehair",
+					"parent": "HairA1",
+					"pivot": [0, 35.67378, 3.32445]
+				},
+				{
 					"name": "HairA2",
 					"parent": "HairA1",
 					"pivot": [1.99771, 33.11532, 7.99837],
