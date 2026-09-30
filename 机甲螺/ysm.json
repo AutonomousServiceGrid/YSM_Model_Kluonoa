@@ -114,7 +114,8 @@
 			},
 			"texture": [
 				{
-					"uv": "textures/texture.png"
+					"uv": "textures/texture.png",
+					"specular": "textures/pbr/texture_s.png"
 				}
 			],
 			"animation": {
@@ -134,7 +135,8 @@
 				"match": ["minecraft:trident"],
 				"model": "models/trident.json",
 				"texture": {
-					"uv": "textures/trident.png"
+					"uv": "textures/trident.png",
+					"specular": "textures/pbr/trident_s.png"
 				}
 			}
 		]
